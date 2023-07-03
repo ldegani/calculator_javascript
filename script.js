@@ -46,27 +46,42 @@ function appendPoint() {
   userInputScreen.textContent += '.';
 }
 
-// Function set the operation
+// Function to set the operation
 function setOperation(operator) {
-  if (currentOperator !== null) evaluate();
-  currentOperator = operator;
-  if (secondNumbers === '') {
+  if (currentOperator === null) {
+    currentOperator = operator
     firstNumbers = userInputScreen.textContent;
-    resultScreen.textContent = `${firstNumbers} ${currentOperator}`;
-  } else {
-    resultScreen.textContent = `${firstNumbers} ${currentOperator} 
-  ${secondNumbers} =`;
+    resultScreen.textContent = `${firstNumbers} ${currentOperator}`
+  } else if (currentOperator !== null && secondNumbers === '') {
+    evaluate();
+    firstNumbers = userInputScreen.textContent;
+    currentOperator = operator;
+    resultScreen.textContent = `${firstNumbers} ${currentOperator}`
+    secondNumbers = '';
+  } else if (currentOperator !== null && secondNumbers !== '') {
+    firstNumbers = userInputScreen.textContent;
+    currentOperator = operator;
+    resultScreen.textContent = `${firstNumbers} ${currentOperator}`
+    secondNumbers = '';
   }
-  reset = true;
+  resetScreen();
 }
 
 // Function to evaluate the operations
 function evaluate() {
-  if (currentOperator === null) return alert('Give me numbers first!');
-  secondNumbers = userInputScreen.textContent;
-  resultScreen.textContent = `${firstNumbers} ${currentOperator} 
-  ${secondNumbers} =`;
-  userInputScreen.textContent = round(operate(firstNumbers, secondNumbers, currentOperator));
+  if (firstNumbers === '') return alert('Give me numbers first!');
+  if (userInputScreen.textContent === '') return alert('Give me another number to work!');
+  if (userInputScreen.textContent === '0' && currentOperator === '÷') {
+    alert('Can\'t divide by zero!')
+    return clearAll();
+  }
+  if (secondNumbers === '') {
+    secondNumbers = userInputScreen.textContent;
+  } else {
+    firstNumbers = userInputScreen.textContent;
+  }
+  resultScreen.textContent = `${firstNumbers} ${currentOperator} ${secondNumbers} =`
+  return userInputScreen.textContent = round(operate(firstNumbers, secondNumbers, currentOperator));
 }
 
 // Function to clear and reset all the variables
