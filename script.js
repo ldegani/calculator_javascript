@@ -13,7 +13,6 @@ let currentOperator = null;
 let secondNumbers = '';
 let reset = false;
 
-
 // Event listeners
 clearScreen.addEventListener('click', clearAll);
 btnEqual.addEventListener('click', evaluate);
@@ -48,22 +47,20 @@ function appendPoint() {
 
 // Function to set the operation
 function setOperation(operator) {
-  if (currentOperator === null) {
-    currentOperator = operator
-    firstNumbers = userInputScreen.textContent;
-    resultScreen.textContent = `${firstNumbers} ${currentOperator}`
-  } else if (currentOperator !== null && secondNumbers === '') {
-    evaluate();
-    firstNumbers = userInputScreen.textContent;
+if (currentOperator !== null && secondNumbers === '') {
+  evaluate();
     currentOperator = operator;
+    firstNumbers = userInputScreen.textContent;
     resultScreen.textContent = `${firstNumbers} ${currentOperator}`
     secondNumbers = '';
-  } else if (currentOperator !== null && secondNumbers !== '') {
-    firstNumbers = userInputScreen.textContent;
-    currentOperator = operator;
-    resultScreen.textContent = `${firstNumbers} ${currentOperator}`
+} else {
+  currentOperator = operator
+  firstNumbers = userInputScreen.textContent;
+  resultScreen.textContent = `${firstNumbers} ${currentOperator}`
+  if (currentOperator !== null && secondNumbers !== '') {
     secondNumbers = '';
   }
+}
   resetScreen();
 }
 
